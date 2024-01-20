@@ -30,10 +30,10 @@ class Post extends Model
         return strtoupper($this->title);
     }
 
-    public function setTitleAttribute($value)
-    {
-        $this->attributes['title'] = strtolower($value);
-    }
+//    public function setTitleAttribute($value)
+//    {
+//        $this->attributes['title'] = strtolower($value);
+//    }
 
     public function comments(): HasMany
     {

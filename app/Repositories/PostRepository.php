@@ -48,7 +48,7 @@ class PostRepository extends BaseRepository
                 'body' => data_get($attributes, 'body', $post->body),
             ]);
 
-            throw_if($updated, GeneralJsonException::class, 'Failed to update post');
+            throw_if(!$updated, GeneralJsonException::class, 'Failed to update post');
 
             if(data_get($attributes, 'user_ids')) {
                 $post->users()->sync(data_get($attributes, 'user_ids'));
