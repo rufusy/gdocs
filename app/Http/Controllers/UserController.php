@@ -9,11 +9,26 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/**
+ * @group User Management
+ *
+ * APIs to manage the user resource
+ */
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
+     *
+     * Gets a list of users
+     *
+     * @queryParam page_size int Size per page. Defaults to Example: 5
+     * @queryParam page int Page to view. Example: 1
+     * @apiResourceCollection App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
+     * @param Request $request
+     * @return AnonymousResourceCollection
      */
     public function index(Request $request): AnonymousResourceCollection
     {
@@ -24,6 +39,10 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @bodyParam name string required Name of the user. Example: John Doe
+     * @bodyParam email string required Email of the user. Example: john.doe@example.com
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      */
     public function store(Request $request, UserRepository $userRepository): UserResource
     {
@@ -37,6 +56,10 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @urlParam id int required user id
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      */
     public function show(User $user): UserResource
     {
@@ -45,6 +68,10 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @bodyParam name string Name of the user. Example: John Doe
+     * @bodyParam email string Email of the user. Example: john.doe@example.com
+     * @apiResource App\Http\Resources\UserResource
+     * @apiResourceModel App\Models\User
      */
     public function update(Request $request, User $user, UserRepository $userRepository): UserResource
     {
@@ -58,6 +85,8 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * @urlParam id int required user id
+     * @response  200 {"data": "success"}
      */
     public function destroy(User $user, UserRepository $userRepository): JsonResponse
     {

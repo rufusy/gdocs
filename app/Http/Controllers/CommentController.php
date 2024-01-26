@@ -9,10 +9,20 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
+/**
+ * @group Comment Management
+ *
+ * APIs to manage the comment resource
+ */
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the comments.
+     *
+     * Gets a list of users
+     *
+     * @queryParam page_size int Size per page. Defaults to 20.
+     * @queryParam page int Page to view.
      */
     public function index(Request $request): AnonymousResourceCollection
     {
