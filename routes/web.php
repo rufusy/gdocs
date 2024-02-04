@@ -30,3 +30,7 @@ if(App::environment('local')) {
         return null;
     });
 }
+
+Route::get('/app', function () {
+    return view('app');
+});

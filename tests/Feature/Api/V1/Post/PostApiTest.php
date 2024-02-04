@@ -3,6 +3,7 @@
 namespace Tests\Feature\Api\V1\Post;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -10,6 +11,14 @@ use Tests\TestCase;
 class PostApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
 
     /**
      * A basic feature test example.
@@ -43,7 +52,13 @@ class PostApiTest extends TestCase
     {
         $dummy = Post::factory()->make();
 
-        $response = $this->json('post', '/api/v1/posts', $dummy->toArray());
+        $dummyUser = User::factory()->create();
+
+        $response = $this->json(
+            'post',
+            '/api/v1/posts',
+            array_merge($dummy->toArray(), ['user_ids' => [$dummyUser->id]])
+        );
 
         $result = $response->assertStatus(201)->json('data');
 
